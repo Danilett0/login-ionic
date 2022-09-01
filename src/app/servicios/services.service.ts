@@ -15,7 +15,7 @@ export class ServicesService {
 
   url = environment.url;
 
-  constructor(private http: HttpClient, private AngFire: AngularFireAuth) { }
+  constructor(private http: HttpClient, private AngFire: AngularFireAuth) {}
 
 
   login(correo: string, contrasena: string){
