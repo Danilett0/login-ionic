@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { rickandmorty } from '../../Model/Listado';
 import {HttpClient} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { promise } from 'protractor';
-import { resolve } from 'dns';
-import { rejects } from 'assert';
+import {AngularFirestore} from '@angular/fire/firestore';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +12,7 @@ export class ServicesService {
 
   url = environment.url;
 
-  constructor(private http: HttpClient, private AngFire: AngularFireAuth) {}
+  constructor(private http: HttpClient, private AngFire: AngularFireAuth, private bd:AngularFirestore) {}
 
 
   login(correo: string, contrasena: string){
@@ -26,12 +23,24 @@ export class ServicesService {
         resolve(usuario)
       }).catch( (error) => { rejects(error) } )
     })
-  }
+  };
 
 
-  // obtenerPersonajes():Observable<rickandmorty> {
-  // return this.http.get<rickandmorty>(this.url);
-  // }
+  registro(correo: string, contrasena: string, telefono: string, fehcaNacimiento: string, nombreCompleto: string){
+    return new Promise((resolve, rejects) => {
+      this.AngFire.signInWithEmailAndPassword(correo, contrasena).then((usuario)=>{
+        console.log(usuario)
+        const id = usuario.uid;
+        this.bd.collection('/Usuarios').doc(id).set({
+          telefono: telefono,
+          fehcaNacimiento: fehcaNacimiento,
+          nombreCompleto: nombreCompleto,
+          uuid: id
+        })
+        resolve(usuario)
+      }).catch( (error) => { rejects(error) } )
+    })
 
+  };
 
 }

@@ -8,12 +8,12 @@ export const environment = {
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyApyJNwcunJcPafMdwW2Ff0nGSeiRrji38",
-  authDomain: "mi-proyecto-8da5d.firebaseapp.com",
-  projectId: "mi-proyecto-8da5d",
-  storageBucket: "mi-proyecto-8da5d.appspot.com",
-  messagingSenderId: "136864429559",
-  appId: "1:136864429559:web:3ae31f3cb338cf4442eaf2"
+  apiKey: "AIzaSyB4-k_qqyqiJcvpkfzRlPqDnj28FsSNveA",
+  authDomain: "apprenta-88d98.firebaseapp.com",
+  projectId: "apprenta-88d98",
+  storageBucket: "apprenta-88d98.appspot.com",
+  messagingSenderId: "942116895722",
+  appId: "1:942116895722:web:8ebead5cabf4b32e399093"
 };
 
 

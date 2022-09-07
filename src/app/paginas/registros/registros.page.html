@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>registros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header collapse="condense">
+  <ion-toolbar>
+    <ion-title size="large">Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form (ngSubmit)="registro()" [formGroup]="form">
+    <div id="container">
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input formControlName="pass"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Telefono</ion-label>
+        <ion-input formControlName="tel"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha Nacimiento</ion-label>
+        <ion-input formControlName="fnacimiento"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="nombre"></ion-input>
+      </ion-item>
+
+
+      <ion-button type="submit" color="success">Register</ion-button>
+    </div>
+  </form>
+</ion-content>
