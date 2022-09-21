@@ -5,13 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
+import { GoogleAuthProvider } from "firebase/auth";
+import { MsalService } from '@azure/msal-angular';
+import { AuthenticationResult } from '@azure/msal-browser';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServicesService {
   // url = environment.url;
-  constructor(private http: HttpClient, private AngFire: AngularFireAuth,private db: AngularFirestore) {}
+  constructor(private http: HttpClient, private AngFire: AngularFireAuth,private db: AngularFirestore,private msalService: MsalService) {}
 
   // personajes():Observable<rickandmorty>{
 
@@ -56,4 +60,18 @@ export class ServicesService {
         });
     });
   }
+
+  loginWithGoogle(){
+    return this.AngFire.signInWithPopup(new GoogleAuthProvider());
+  }
+
+  loginWithMicrosoft(){
+    return  this.msalService.loginPopup().subscribe((response:AuthenticationResult)=>{
+      this.msalService.instance.setActiveAccount(response.account)
+      const data = response.account;
+
+      localStorage.setItem('Datos', JSON.stringify(data.username))
+    })
+  }
+
 }

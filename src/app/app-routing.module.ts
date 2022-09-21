@@ -8,13 +8,17 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'registros',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
     path: 'registros',
     loadChildren: () => import('./paginas/registros/registros.module').then( m => m.RegistrosPageModule)
   },
+  {
+    path: 'principal',
+    loadChildren: () => import('./paginas/principal/principal.module').then( m => m.PrincipalPageModule)
+  }
 ];
 
 @NgModule({

@@ -37,10 +37,15 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input [(ngModel)]="pass"></ion-input>
+      <ion-input style="width: 300px;" [(ngModel)]="pass"></ion-input>
     </ion-item>
 
-
-    <ion-button (click)="loguearse()" color="success">Success</ion-button>
+    <ion-button style="width: 300px;" (click)="loguearse()" color="success">Logion</ion-button>
+    <br>
+    <ion-button style="width: 300px;" color="primary"  (click)="loguearseConGoogle()">Login Google</ion-button>
+    <br>
+    <ion-button style="width: 300px;" color="primary"  (click)="loginWithMicrosoft()">Login OFFICE</ion-button>
+    <br>
+    <ion-button style="width: 300px;" color="warning"  [routerLink]="['/registros']" >  registro </ion-button>
   </div>
 </ion-content>
