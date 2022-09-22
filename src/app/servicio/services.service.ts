@@ -1,27 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { rickandmorty } from '../Modelo/listado/Listado';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import { GoogleAuthProvider } from "firebase/auth";
 import { MsalService } from '@azure/msal-angular';
 import { AuthenticationResult } from '@azure/msal-browser';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class ServicesService {
-  // url = environment.url;
   constructor(private http: HttpClient, private AngFire: AngularFireAuth,private db: AngularFirestore,private msalService: MsalService) {}
-
-  // personajes():Observable<rickandmorty>{
-
-  //   return this.http.get<rickandmorty>(this.url);
-
-  // }
 
   login(email: string, pass: string) {
     return new Promise((resolve, rejects) => {
@@ -66,10 +55,10 @@ export class ServicesService {
   }
 
   loginWithMicrosoft(){
-    return  this.msalService.loginPopup().subscribe((response:AuthenticationResult)=>{
+    return this.msalService.loginPopup().subscribe((response:AuthenticationResult)=>{
       this.msalService.instance.setActiveAccount(response.account)
-      const data = response.account;
-
+      let data = response.account;
+      console.log("Datos respuesta service >", data.username);
       localStorage.setItem('Datos', JSON.stringify(data.username))
     })
   }

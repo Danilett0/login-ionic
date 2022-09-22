@@ -14,11 +14,10 @@ export class PrincipalPage implements OnInit {
   ngOnInit() {
 
    let InformacionUsuario = JSON.parse(localStorage.getItem('Datos'))
-   let {user} = InformacionUsuario;
 
     this.datosCliente = InformacionUsuario
 
-    console.log(">>", this.datosCliente)
+    console.log("prinsipal page", this.datosCliente);
 
   }
 

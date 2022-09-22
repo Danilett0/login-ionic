@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../servicio/services.service';
-import {personajes} from '../Modelo/listado/Listado';
+import { personajes } from '../Modelo/listado/Listado';
 import { Router } from '@angular/router';
-import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
-import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+import {
+  IPublicClientApplication,
+  PublicClientApplication,
+} from '@azure/msal-browser';
 
-export function MSALInstanceFactory(): IPublicClientApplication{
+export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
-    auth: {clientId: 'b2ef3da7-a0cb-4a81-9250-3914e32df15d', redirectUri: 'http://localhost:4200/home'}
-  })
+    auth: {
+      clientId: 'b2ef3da7-a0cb-4a81-9250-3914e32df15d',
+      redirectUri: 'http://localhost:4200/home',
+    },
+  });
 }
 
 @Component({
@@ -16,61 +21,52 @@ export function MSALInstanceFactory(): IPublicClientApplication{
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-
-
 export class HomePage implements OnInit {
-
-  
-
   personajes: personajes[] = [];
-
   email: string;
-  pass:string;
+  pass: string;
 
   constructor(private servicio: ServicesService, private router: Router) {}
 
   ngOnInit(): void {
-    // this.servicio.personajes().subscribe(data =>{
-      
-
-    //   this.personajes = data.results;
-    //   console.log(this.personajes);
-    // }, error=>{
-    //   console.log(error);
-    // })
+    localStorage.clear();
   }
 
-  loguearse(){
-   this.servicio.login(this.email, this.pass).then((respuesta)=>{
-    console.log(respuesta)
-   }).catch((error)=>{
-    alert("error de datos" + error)
-   })
+  loguearse() {
+    this.servicio
+      .login(this.email, this.pass)
+      .then((respuesta) => {
+        console.log(respuesta);
+      })
+      .catch((error) => {
+        alert('error de datos' + error);
+      });
   }
-  
 
-  loguearseConGoogle(){
-    this.servicio.loginWithGoogle().then((data)=>{
-      console.log(data.user.multiFactor);
-      localStorage.setItem('Datos', JSON.stringify(data.user.multiFactor))
+  loguearseConGoogle() {
+    this.servicio.loginWithGoogle().then(
+      (data) => {
+        console.log(data.user.multiFactor);
+        localStorage.setItem('Datos', JSON.stringify(data.user.multiFactor));
+        this.router.navigate(['/principal']);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  datosCliente: string;
+
+  loginWithMicrosoft() {
+    let respuesta = this.servicio.loginWithMicrosoft();
+
+    let InformacionUsuario = JSON.parse(localStorage.getItem('Datos'));
+    this.datosCliente = InformacionUsuario;
+    
+    console.log('datos home page', InformacionUsuario);
+    if (InformacionUsuario != null) {
       this.router.navigate(['/principal']);
-    },error=>{console.log(error)});
+    }
   }
-
-  datosCliente:any [] = [];
-
-  loginWithMicrosoft(){
-   let hola = this.servicio.loginWithMicrosoft()
-  
-   let InformacionUsuario = JSON.parse(localStorage.getItem('Datos'))
-   let {username} = InformacionUsuario;
-
-    this.datosCliente = Object.values({username})
-
-    console.log(">>", InformacionUsuario)
-
-    this.router.navigate(['/principal']);
-
-  }
-
 }
